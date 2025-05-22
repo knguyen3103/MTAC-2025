@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse; // ← sửa import
+use App\Http\Controllers\Controller;
 
 class DocumentController extends Controller
 {

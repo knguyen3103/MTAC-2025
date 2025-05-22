@@ -9,13 +9,10 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $roles = ['admin', 'truong_phong', 'nhan_vien'];
-
-        foreach ($roles as $role) {
-            DB::table('roles')->updateOrInsert(
-                ['name' => $role],
-                ['created_at' => now(), 'updated_at' => now()]
-            );
-        }
+        DB::table('roles')->insert([
+            ['name' => 'admin', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'truong_phong', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'nhan_vien', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }

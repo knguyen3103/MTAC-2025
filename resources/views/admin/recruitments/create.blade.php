@@ -14,7 +14,9 @@
                 </div>
             @endif
 
-            <form action="{{ route('recruitments.store') }}" method="POST">
+            <form action="{{ route('admin.recruitments.store') }}" method="POST">
+
+
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">🎯 Tiêu đề</label>
@@ -37,7 +39,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('admin.recruitments.index') }}" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left-circle"></i> Hủy bỏ
                     </a>
                     <button type="submit" class="btn btn-primary">

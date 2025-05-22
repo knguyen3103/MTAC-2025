@@ -7,47 +7,43 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+
+
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('users')->updateOrInsert(
-            ['email' => 'admin@example.com'],
+        $users = [
             [
                 'name' => 'Admin',
-                'password' => Hash::make('123456'),
-                'role_id' => 1,
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        DB::table('users')->updateOrInsert(
-            ['email' => 'truongphong@example.com'],
+                'email' => 'admin@example.com',
+                'role_id' => 1, // đảm bảo role_id 1 là 'admin'
+            ],
             [
                 'name' => 'Trưởng phòng Nhân sự',
-                'password' => Hash::make('123456'),
-                'role_id' => 2,
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        DB::table('users')->updateOrInsert(
-            ['email' => 'nhanvien@example.com'],
+                'email' => 'truongphong@example.com',
+                'role_id' => 2, // đảm bảo role_id 2 là 'truong_phong'
+            ],
             [
                 'name' => 'Nguyễn Văn A',
-                'password' => Hash::make('123456'),
-                'role_id' => 3,
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
+                'email' => 'nhanvien@example.com',
+                'role_id' => 3, // đảm bảo role_id 3 là 'nhan_vien'
+            ],
+        ];
+
+        foreach ($users as $user) {
+            DB::table('users')->updateOrInsert(
+                ['email' => $user['email']],
+                [
+                    'name' => $user['name'],
+                    'password' => Hash::make('123456'),
+                    'role_id' => $user['role_id'],
+                    'email_verified_at' => now(),
+                    'remember_token' => Str::random(10),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
     }
 }

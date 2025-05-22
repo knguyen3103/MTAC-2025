@@ -69,11 +69,30 @@
 
 
   <div class="row g-4">
-    @foreach ([
-      ['route' => 'admin.employees.index', 'icon' => '👥', 'title' => 'Nhân sự', 'desc' => '...', 'color' => 'border-primary'],
-      ['route' => 'admin.recruitments.index', 'icon' => '📄', 'title' => 'Tuyển dụng', 'desc' => '...', 'color' => 'border-success'],
-      ['route' => 'admin.users.index', 'icon' => '🔒', 'title' => 'Tài khoản', 'desc' => '...', 'color' => 'border-warning'],
-    ] as $mod)
+   @foreach ([
+    [
+        'route' => 'admin.a_employees.index',
+        'icon' => '👥',
+        'title' => 'Nhân sự',
+        'desc' => 'Quản lý danh sách nhân sự toàn hệ thống',
+        'color' => 'border-primary'
+    ],
+    [
+        'route' => 'admin.recruitments.index',
+        'icon' => '📄',
+        'title' => 'Tuyển dụng',
+        'desc' => 'Quản lý chiến dịch và hồ sơ ứng viên',
+        'color' => 'border-success'
+    ],
+    [
+        'route' => 'admin.users.index',
+        'icon' => '🔒',
+        'title' => 'Tài khoản',
+        'desc' => 'Phân quyền và quản lý đăng nhập',
+        'color' => 'border-warning'
+    ]
+] as $mod)
+
     <div class="col-md-6 col-lg-4">
       <a href="{{ route($mod['route']) }}" class="module-link {{ $mod['color'] ?? 'border-secondary' }} card-hover">
         <h5 class="mb-1">{{ $mod['icon'] }} {{ $mod['title'] }}</h5>
