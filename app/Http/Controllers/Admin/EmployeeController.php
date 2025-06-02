@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Http\Controllers\Controller;
+use App\Models\Applicant;
 
 class EmployeeController extends Controller
 {
@@ -46,25 +47,44 @@ class EmployeeController extends Controller
         return view('admin.a_employees.create', compact('departments'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'ma_nhanvien'   => 'required|string|max:50|unique:employees',
-            'ho_ten'        => 'required|string|max:255',
-            'gioi_tinh'     => 'required|string',
-            'ngay_sinh'     => 'nullable|date',
-            'department_id' => 'required|exists:departments,id',
-            'vi_tri'        => 'nullable|string|max:255',
-            'trang_thai'    => 'required|string',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'ho_ten'        => 'required|string|max:255',
+        'gioi_tinh'     => 'required|string',
+        'ngay_sinh'     => 'nullable|date',
+        'department_id' => 'required|exists:departments,id',
+        'vi_tri'        => 'nullable|string|max:255',
+        'trang_thai'    => 'required|string',
+    ]);
 
-        Employee::create($request->only([
-            'ma_nhanvien', 'ho_ten', 'gioi_tinh', 'ngay_sinh',
-            'department_id', 'vi_tri', 'trang_thai'
-        ]));
+    // Ánh xạ trạng thái → tiền tố mã nhân viên
+    $prefixMap = [
+        'Chính thức'     => 'MT',
+        'Thử việc'       => 'MTN',
+        'Đào tạo'        => 'DT',
+        'Thực tập'       => 'TT',
+        'Cộng tác viên'  => 'TV',
+        'Thời vụ'        => 'TVU',
+    ];
 
-        return redirect()->route('admin.a_employees.index')->with('success', 'Đã thêm nhân sự thành công.');
-    }
+    $prefix = $prefixMap[$request->trang_thai] ?? 'NV';
+    $count = Employee::where('ma_nhanvien', 'like', $prefix . '%')->count() + 1;
+    $ma_nhanvien = $prefix . str_pad($count, 2, '0', STR_PAD_LEFT);
+
+    Employee::create([
+        'ma_nhanvien'   => $ma_nhanvien,
+        'ho_ten'        => $request->ho_ten,
+        'gioi_tinh'     => $request->gioi_tinh,
+        'ngay_sinh'     => $request->ngay_sinh,
+        'vi_tri'        => $request->vi_tri,
+        'trang_thai'    => $request->trang_thai,
+        'department_id' => $request->department_id,
+        'email'         => null // hoặc bổ sung nếu cần
+    ]);
+
+    return redirect()->route('admin.a_employees.index')->with('success', "✅ Đã thêm nhân sự {$ma_nhanvien} thành công.");
+}
 
     public function edit($id)
     {
@@ -103,4 +123,16 @@ class EmployeeController extends Controller
         $employee = Employee::with('department')->findOrFail($id);
         return view('admin.a_employees.show', compact('employee'));
     }
+    // Danh sách nhân viên mới (ứng viên đã đủ hồ sơ)
+public function newEmployees()
+    {
+        $employees = Applicant::where('hr_file_status', 'Đủ HS')
+                            ->where('status', 'Trúng tuyển') // đảm bảo đúng logic
+                            ->orderByDesc('updated_at')
+                            ->get();
+
+       return view('admin.a_employees.new_employees', compact('employees'));
+
+    }
+
 }

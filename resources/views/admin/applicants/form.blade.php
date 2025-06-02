@@ -53,8 +53,8 @@
     </div>
 
     <form method="POST"
-        action="{{ isset($applicant) ? route('admin.applicants.update', $applicant->id) : route('admin.applicants.store') }}"
-        enctype="multipart/form-data">
+          action="{{ isset($applicant) ? route('admin.applicants.update', $applicant->id) : route('admin.applicants.store') }}"
+          enctype="multipart/form-data">
         @csrf
         @if(isset($applicant)) @method('PUT') @endif
 
@@ -62,52 +62,53 @@
             <div class="col-md-6">
                 <label for="full_name" class="form-label">Họ và tên <span>*</span></label>
                 <input type="text" id="full_name" name="full_name" class="form-control"
-                    value="{{ old('full_name', $applicant->full_name ?? '') }}" required>
+                       value="{{ old('full_name', $applicant->full_name ?? '') }}" required>
             </div>
 
             <div class="col-md-6">
                 <label for="email" class="form-label">Email <span>*</span></label>
                 <input type="email" id="email" name="email" class="form-control"
-                    value="{{ old('email', $applicant->email ?? '') }}" required>
+                       value="{{ old('email', $applicant->email ?? '') }}" required>
             </div>
 
             <div class="col-md-6">
                 <label for="phone" class="form-label">Số điện thoại</label>
                 <input type="text" id="phone" name="phone" class="form-control"
-                    value="{{ old('phone', $applicant->phone ?? '') }}">
+                       value="{{ old('phone', $applicant->phone ?? '') }}">
             </div>
 
             <div class="col-md-6">
                 <label for="birthday" class="form-label">Ngày sinh</label>
                 <input type="date" id="birthday" name="birthday" class="form-control"
-                    value="{{ old('birthday', $applicant->birthday ?? '') }}">
+                       value="{{ old('birthday', $applicant->birthday ?? '') }}">
             </div>
 
             <div class="col-md-6">
                 <label for="major" class="form-label">Chuyên ngành</label>
                 <input type="text" id="major" name="major" class="form-control"
-                    value="{{ old('major', $applicant->major ?? '') }}">
+                       value="{{ old('major', $applicant->major ?? '') }}">
             </div>
 
             <div class="col-md-6">
                 <label for="university" class="form-label">Trường học</label>
                 <input type="text" id="university" name="university" class="form-control"
-                    value="{{ old('university', $applicant->university ?? '') }}">
+                       value="{{ old('university', $applicant->university ?? '') }}">
             </div>
 
             <div class="col-md-6">
                 <label for="position" class="form-label">Vị trí ứng tuyển</label>
                 <input type="text" id="position" name="position" class="form-control"
-                    value="{{ old('position', $applicant->position ?? '') }}">
+                       value="{{ old('position', $applicant->position ?? '') }}">
             </div>
 
             <div class="col-md-6">
                 <label for="status" class="form-label">Trạng thái</label>
-                @php $status = old('status', $applicant->status ?? 'Ứng tuyển'); @endphp
+                @php
+                    $status = old('status', $applicant->status ?? 'Chờ duyệt');
+                @endphp
                 <select name="status" id="status" class="form-select">
-                    <option value="Ứng tuyển" {{ $status == 'Ứng tuyển' ? 'selected' : '' }}>Ứng tuyển</option>
-                    <option value="Đã phỏng vấn" {{ $status == 'Đã phỏng vấn' ? 'selected' : '' }}>Đã phỏng vấn</option>
-                    <option value="Trúng tuyển" {{ $status == 'Trúng tuyển' ? 'selected' : '' }}>Trúng tuyển</option>
+                    <option value="Chờ duyệt" {{ $status == 'Chờ duyệt' ? 'selected' : '' }}>Chờ duyệt</option>
+                    <option value="Đã duyệt" {{ $status == 'Đã duyệt' ? 'selected' : '' }}>Đã duyệt</option>
                     <option value="Loại" {{ $status == 'Loại' ? 'selected' : '' }}>Loại</option>
                 </select>
             </div>
@@ -118,7 +119,7 @@
                 @if(isset($applicant) && $applicant->cv_path)
                     <div class="mt-2">
                         <a href="{{ asset('storage/' . $applicant->cv_path) }}" target="_blank"
-                            class="btn btn-sm btn-outline-primary">
+                           class="btn btn-sm btn-outline-primary">
                             📎 Xem CV hiện tại
                         </a>
                     </div>

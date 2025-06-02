@@ -4,6 +4,9 @@
     background: linear-gradient(to bottom, #1e3a8a, #1d4ed8);
     color: white;
     font-family: Arial, sans-serif;
+    min-height: 100vh;
+    padding-top: 1rem;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Nhóm tiêu đề */
@@ -19,10 +22,12 @@
     transition: background 0.2s ease;
     margin-top: 1rem;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
 .sidebar .group-title:hover {
     background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 /* Mũi tên xoay khi mở */
@@ -39,10 +44,11 @@
 .sidebar a {
     display: block;
     padding: 0.5rem 1.75rem;
-    color: white;
+    color: #f0f4ff;
     font-size: 0.875rem;
     text-decoration: none;
     transition: background 0.2s, padding-left 0.3s;
+    border-left: 4px solid transparent;
 }
 
 .sidebar a:hover,
@@ -50,6 +56,8 @@
     background-color: rgba(255, 255, 255, 0.15);
     padding-left: 2rem;
     font-weight: 600;
+    border-left: 4px solid #ffffff;
+    color: #ffffff;
 }
 
 /* Submenu links */
@@ -80,4 +88,5 @@
     position: absolute;
     top: 1rem;
     right: 1.5rem;
+    z-index: 10;
 }

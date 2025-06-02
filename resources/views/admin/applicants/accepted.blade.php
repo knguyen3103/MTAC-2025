@@ -39,7 +39,7 @@
 </style>
 
 <div class="container mt-4">
-    <h3 class="mb-4">📋 Danh sách ứng viên trúng tuyển</h3>
+    <h3 class="mb-4">📋 Kết quả phỏng vấn</h3>
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

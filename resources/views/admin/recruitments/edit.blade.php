@@ -1,6 +1,47 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Bootstrap Icons nếu chưa có -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+    .btn i {
+        margin-right: 6px;
+    }
+
+    .card-header h4 {
+        font-size: 1.4rem;
+        font-weight: bold;
+    }
+
+    .alert-danger ul {
+        margin-bottom: 0;
+        padding-left: 18px;
+    }
+
+    @media (max-width: 768px) {
+        .card-header h4 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
 <div class="container mt-5">
     <div class="card shadow border-0">
         <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
@@ -22,7 +63,6 @@
                 @csrf
                 @method('PUT')
 
-
                 <div class="mb-3">
                     <label for="title" class="form-label">🎯 Tiêu đề</label>
                     <input type="text" class="form-control" id="title" name="title"
@@ -35,11 +75,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="department" class="form-label">🏢 Phòng ban</label>
-                    <input type="text" class="form-control" id="department" name="department"
-                           value="{{ old('department', $recruitment->department) }}">
+                    <label for="department_id" class="form-label">🏢 Phòng ban</label>
+                    <select name="department_id" id="department_id" class="form-select" required>
+                        <option value="">-- Chọn phòng ban --</option>
+                        @foreach($departments as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-
                 <div class="mb-3">
                     <label for="deadline" class="form-label">📅 Hạn nộp hồ sơ</label>
                     <input type="date" class="form-control" id="deadline" name="deadline"

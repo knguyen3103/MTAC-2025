@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Recruitment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\Department;
 class RecruitmentController extends Controller
 {
     public function index()
@@ -16,9 +16,10 @@ class RecruitmentController extends Controller
     }
 
     public function create()
-    {
-        return view('admin.recruitments.create');
-    }
+        {
+            $departments = Department::pluck('ten_phongban', 'id'); // hoặc ->all() nếu bạn cần nhiều dữ liệu
+            return view('admin.recruitments.create', compact('departments'));
+        }
 
     public function store(Request $request)
     {
@@ -35,9 +36,10 @@ class RecruitmentController extends Controller
     }
 
     public function edit($id)
-    {
+        {
         $recruitment = Recruitment::findOrFail($id);
-        return view('admin.recruitments.edit', compact('recruitment'));
+        $departments = Department::pluck('ten_phongban', 'id');
+        return view('admin.recruitments.edit', compact('recruitment', 'departments'));
     }
 
     public function update(Request $request, $id)

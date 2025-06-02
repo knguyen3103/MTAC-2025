@@ -35,9 +35,8 @@
         font-weight: 500;
     }
 
-    .badge-ung-tuyen     { background: #e2e3ff; color: #1b1e61; }
-    .badge-da-pv         { background: #fff3cd; color: #664d03; }
-    .badge-trung-tuyen   { background: #d1e7dd; color: #0f5132; }
+    .badge-cho-duyet     { background: #e2e3ff; color: #1b1e61; }
+    .badge-da-duyet      { background: #d1e7dd; color: #0f5132; }
     .badge-loai          { background: #f8d7da; color: #842029; }
 
     .form-select {
@@ -68,10 +67,8 @@
         <form action="{{ route('admin.applicants.index') }}" method="GET">
             <select name="status" class="form-select" onchange="this.form.submit()">
                 <option value="">-- Tất cả trạng thái --</option>
-                <option value="Ứng tuyển" {{ request('status') == 'Ứng tuyển' ? 'selected' : '' }}>Ứng tuyển</option>
-                <option value="CV đã duyệt" {{ request('status') == 'CV đã duyệt' ? 'selected' : '' }}>CV đã duyệt</option>
-                <option value="Đã phỏng vấn" {{ request('status') == 'Đã phỏng vấn' ? 'selected' : '' }}>Đã phỏng vấn</option>
-                <option value="Trúng tuyển" {{ request('status') == 'Trúng tuyển' ? 'selected' : '' }}>Trúng tuyển</option>
+                <option value="Chờ duyệt" {{ request('status') == 'Chờ duyệt' ? 'selected' : '' }}>Chờ duyệt</option>
+                <option value="Đã duyệt" {{ request('status') == 'Đã duyệt' ? 'selected' : '' }}>Đã duyệt</option>
                 <option value="Loại" {{ request('status') == 'Loại' ? 'selected' : '' }}>Loại</option>
             </select>
         </form>
@@ -107,9 +104,8 @@
                     <td>
                         @php
                             $badgeClass = match($a->status) {
-                                'Ứng tuyển' => 'badge-ung-tuyen',
-                                'Đã phỏng vấn' => 'badge-da-pv',
-                                'Trúng tuyển' => 'badge-trung-tuyen',
+                                'Chờ duyệt' => 'badge-cho-duyet',
+                                'Đã duyệt' => 'badge-da-duyet',
                                 'Loại' => 'badge-loai',
                                 default => 'badge-secondary'
                             };

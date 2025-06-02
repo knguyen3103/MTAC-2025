@@ -14,7 +14,7 @@
     {{-- Custom styles (nếu có) --}}
     <style>
         body {
-            background-color: #f5f8fa;
+            background-color: #0d1114;
             font-family: 'Segoe UI', sans-serif;
         }
     </style>
