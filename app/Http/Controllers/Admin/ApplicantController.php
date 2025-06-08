@@ -284,4 +284,6 @@ class ApplicantController extends Controller
         return redirect()->route('admin.a_employees.index')
             ->with('success', "✅ Đã tạo nhân sự {$ma_nhanvien} thành công.");
     }
+
+
 }

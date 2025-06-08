@@ -18,6 +18,18 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+    // Thêm sau dòng public const HOME = '/dashboard';
+            public static function redirectTo()
+        {
+            $user = auth()->user();
+
+            if ($user && $user->role === 'admin') {
+                return '/admin/users/dashboard'; // đúng đường dẫn đến file dashboard.blade.php
+            }
+
+            return self::HOME;
+        }
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

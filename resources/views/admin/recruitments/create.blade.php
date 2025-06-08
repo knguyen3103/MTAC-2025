@@ -32,6 +32,10 @@
     .alert {
         font-size: 0.95rem;
     }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
 </style>
 
 <div class="container mt-5">
@@ -41,10 +45,14 @@
         </div>
 
         <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> Vui lòng kiểm tra lại các trường sau:
+                    <ul class="mt-2 mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -53,12 +61,19 @@
 
                 <div class="mb-3">
                     <label for="title" class="form-label">🎯 Tiêu đề</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
+                    <input type="text" class="form-control" id="title" name="title" 
+                        value="{{ old('title') }}" required>
+                    @error('title')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">📝 Mô tả công việc</label>
-                    <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="5" required>{{ old('description') }}</textarea>
+                    @error('description')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
@@ -66,14 +81,23 @@
                     <select name="department_id" id="department_id" class="form-select" required>
                         <option value="">-- Chọn phòng ban --</option>
                         @foreach($departments as $id => $name)
-                            <option value="{{ $id }}">{{ $name }}</option>
+                            <option value="{{ $id }}" {{ old('department_id') == $id ? 'selected' : '' }}>
+                                {{ $name }}
+                            </option>
                         @endforeach
                     </select>
+                    @error('department_id')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="deadline" class="form-label">📅 Hạn nộp hồ sơ</label>
-                    <input type="date" class="form-control" id="deadline" name="deadline">
+                    <input type="date" class="form-control" id="deadline" name="deadline"
+                        value="{{ old('deadline') }}">
+                    @error('deadline')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">

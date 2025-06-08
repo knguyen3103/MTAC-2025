@@ -22,4 +22,10 @@ class Applicant extends Model
     'confirmation',
     'hr_file_status'
 ];
+public function department()
+{
+    return $this->belongsTo(\App\Models\Department::class, 'department_id');
+}
+
+
 }

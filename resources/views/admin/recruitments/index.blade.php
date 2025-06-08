@@ -106,7 +106,7 @@
                     @foreach ($recruitments as $item)
                         <tr>
                             <td>{{ $item->title }}</td>
-                            <td>{{ $item->department ?? '---' }}</td>
+                            <td>{{ $item->department?->ten_phongban ?? '---' }}</td>
                             <td>{{ $item->deadline ?? '---' }}</td>
                             <td>{{ $item->created_at->format('d/m/Y H:i') }}</td>
                             <td class="action-buttons text-center">

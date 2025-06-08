@@ -4,20 +4,20 @@ use Illuminate\Support\Facades\Route;
 
 //  Controllers cho USER
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\User\DocumentController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\PasswordChangeController;
-
+use App\Http\Controllers\User\AnnouncementController as UserAnnouncementController;
+use App\Http\Controllers\User\RecruitmentController as UserRecruitmentController;
 //  Controllers cho ADMIN
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ApplicantController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RecruitmentController;
 use App\Http\Controllers\Admin\InterviewController;
 use App\Http\Controllers\Admin\RecruitmentPlanController;
-use App\Http\Controllers\Admin\AnnouncementController;
+use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\ReportController;
-
+use App\Http\Controllers\Admin\DashboardController;
 // Excel Export
 use App\Exports\RecruitmentPlansExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -53,9 +53,16 @@ Route::middleware('auth')->group(function () {
 
 // ============ ADMIN ============
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+    // Sửa tài khoản
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+    // Xoá tài khoản
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::prefix('a_employees')->name('a_employees.')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('index');
@@ -130,12 +137,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     });
 
     Route::prefix('announcements')->name('announcements.')->group(function () {
-        Route::get('/', [AnnouncementController::class, 'index'])->name('index');
-        Route::get('/create', [AnnouncementController::class, 'create'])->name('create');
-        Route::post('/', [AnnouncementController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [AnnouncementController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [AnnouncementController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AnnouncementController::class, 'destroy'])->name('destroy');
+        Route::get('/', [ AdminAnnouncementController::class, 'index'])->name('index');
+        Route::get('/create', [ AdminAnnouncementController::class, 'create'])->name('create');
+        Route::post('/', [ AdminAnnouncementController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [ AdminAnnouncementController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [ AdminAnnouncementController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ AdminAnnouncementController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('hr')->name('hr.')->group(function () {
@@ -153,7 +160,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 // ============ NHÂN VIÊN ============
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'role:nhan_vien'])->group(function () {
     Route::get('/dashboard', fn () => view('employee.dashboard'))->name('dashboard');
+    Route::get('/announcements', [UserAnnouncementController::class, 'index'])->name('announcements');
+   Route::get('/recruitments', [UserRecruitmentController::class, 'index'])->name('recruitments');
+
 });
+
 
 // ============ ROUTE AUTH ============
 require __DIR__.'/auth.php';

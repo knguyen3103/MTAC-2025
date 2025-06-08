@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 class RecruitmentController extends Controller
 {
-    public function index()
-    {
-        $recruitments = Recruitment::latest()->get();
-        return view('admin.recruitments.index', compact('recruitments'));
-    }
+  public function index()
+        {
+            $recruitments = Recruitment::with('department')->latest()->get();
+            return view('admin.recruitments.index', compact('recruitments'));
+        }
+
 
     public function create()
         {
@@ -22,18 +23,24 @@ class RecruitmentController extends Controller
         }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'department' => 'nullable|string|max:100',
-            'deadline' => 'nullable|date',
-        ]);
+        {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'department_id' => 'nullable|exists:departments,id',
+                'deadline' => 'nullable|date',
+            ]);
 
-        Recruitment::create($request->only('title', 'description', 'department', 'deadline'));
+            Recruitment::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'department_id' => $request->department_id,
+                'deadline' => $request->deadline,
+            ]);
 
-        return redirect()->route('admin.recruitments.index')->with('success', 'Đã đăng tin thành công!');
-    }
+            return redirect()->route('admin.recruitments.index')->with('success', 'Đã đăng tin thành công!');
+        }
+
 
     public function edit($id)
         {
@@ -42,20 +49,26 @@ class RecruitmentController extends Controller
         return view('admin.recruitments.edit', compact('recruitment', 'departments'));
     }
 
-    public function update(Request $request, $id)
-{
-    $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'department' => 'nullable|string|max:100',
-        'deadline' => 'nullable|date',
-    ]);
+   public function update(Request $request, $id)
+        {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'department_id' => 'nullable|exists:departments,id',
+                'deadline' => 'nullable|date',
+            ]);
 
-    $recruitment = Recruitment::findOrFail($id);
-    $recruitment->update($request->only('title', 'description', 'department', 'deadline'));
+            $recruitment = Recruitment::findOrFail($id);
+            $recruitment->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'department_id' => $request->department_id,
+                'deadline' => $request->deadline,
+            ]);
 
-    return redirect()->route('admin.recruitments.index')->with('success', 'Cập nhật thành công!');
-}
+            return redirect()->route('admin.recruitments.index')->with('success', 'Cập nhật thành công!');
+        }
+
 
 
     public function destroy($id)

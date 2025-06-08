@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Bootstrap Icons nếu chưa có -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <style>
@@ -59,7 +58,7 @@
                 </div>
             @endif
             
-           <form action="{{ route('admin.recruitments.update', $recruitment->id) }}" method="POST">
+            <form action="{{ route('admin.recruitments.update', $recruitment->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -79,14 +78,18 @@
                     <select name="department_id" id="department_id" class="form-select" required>
                         <option value="">-- Chọn phòng ban --</option>
                         @foreach($departments as $id => $name)
-                            <option value="{{ $id }}">{{ $name }}</option>
+                            <option value="{{ $id }}" 
+                                {{ old('department_id', $recruitment->department_id) == $id ? 'selected' : '' }}>
+                                {{ $name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
+
                 <div class="mb-3">
                     <label for="deadline" class="form-label">📅 Hạn nộp hồ sơ</label>
                     <input type="date" class="form-control" id="deadline" name="deadline"
-                           value="{{ old('deadline', $recruitment->deadline) }}">
+                           value="{{ old('deadline', $recruitment->deadline ? \Carbon\Carbon::parse($recruitment->deadline)->format('Y-m-d') : '') }}">
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">

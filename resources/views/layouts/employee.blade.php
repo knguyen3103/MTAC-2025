@@ -78,34 +78,32 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('dashboard') }}">TRANG CHỦ</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">BẢN TIN NỘI BỘ</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Bản tin công ty</a></li>
-            <li><a class="dropdown-item" href="#">Bản tin phòng ban</a></li>
-            <li><a class="dropdown-item" href="#">Bản tin cá nhân</a></li>
-          </ul>
-        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ route('employee.announcements') }}">BẢN TIN CÔNG TY</a>
+      </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">TUYỂN DỤNG</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Đề xuất tuyển dụng</a></li>
+           <li><a class="dropdown-item" href="{{ route('employee.recruitments') }}">Thông báo tuyển dụng</a></li>
             <li><a class="dropdown-item" href="#">Kế hoạch tuyển dụng</a></li>
             <li><a class="dropdown-item" href="#">Lịch phỏng vấn</a></li>
-            <li><a class="dropdown-item" href="#">Đánh giá ứng viên</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">HỒ SƠ NHÂN SỰ</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Nhân sự nội bộ</a></li>
-            <li><a class="dropdown-item" href="#">Nhân sự bên ngoài</a></li>
-            <li><a class="dropdown-item" href="#">Quyết định</a></li>
-            <li><a class="dropdown-item" href="#">Báo cáo</a></li>
+            <li><a class="dropdown-item" href="#">Phòng ban công ty</a></li>
+            <li><a class="dropdown-item" href="#">Nhân sự công ty</a></li>
+            <li><a class="dropdown-item" href="#">Hợp đồng nhân sự</a></li>
+            <li><a class="dropdown-item" href="#">Kiêm nhiệm</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">BÁO CÁO CÔNG VIỆC</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">THỐNG KÊ</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Thống kê tuyển dụng</a></li>
+            <li><a class="dropdown-item" href="#">Thống kê nhân sự</a></li>
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">LỊCH CÔNG TÁC & NGHỈ PHÉP</a>

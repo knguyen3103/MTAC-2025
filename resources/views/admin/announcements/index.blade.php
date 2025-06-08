@@ -48,7 +48,7 @@
       margin-right: 4px;
     }
   </style>
-  <h3 class="mb-4">📢 Danh sách thông báo nhân sự</h3>
+  <h3 class="mb-4">📢 Danh sách thông báo </h3>
 
   @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>

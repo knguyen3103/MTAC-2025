@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;           // ← import HasMany
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Role;
 
 /**
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Document[] $documents
